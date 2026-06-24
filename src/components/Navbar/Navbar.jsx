@@ -148,12 +148,25 @@ export default function Navbar() {
                 )}
               </div>
             ) : (
-              <Link
+              <>
+                <Link
                 href="/login"
                 className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
               >
                 Sign in
               </Link>
+                <Link
+                href="/register"
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
+              >
+                Register
+              </Link>
+
+              </>
+             
+              
+              
+
             )}
           </div>
 
