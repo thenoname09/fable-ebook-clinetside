@@ -33,7 +33,7 @@ export default function LoginPage() {
     const credentials = Object.fromEntries(formData.entries());
 
     try {
-      // Better-Auth email sign-in engine execution
+      
       const { data, error: authError } = await authClient.signIn.email({
         email: credentials.email,
         password: credentials.password,

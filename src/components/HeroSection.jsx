@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+
 import Link from "next/link";
 import { ArrowRight, BookOpen, Sparkles } from "lucide-react";
 import NumberCountUp from "./HeroSection/NumberCountUp";
-import { motion, useSpring } from "framer-motion";
+import { motion, useSpring } from "motion/react";
 
 // ── floating book cards data ──────────────────────────────────────────────────
 const FLOAT_CARDS = [
@@ -190,7 +190,7 @@ export default function HeroSection() {
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#080808] to-transparent" />
 
       {/* ── Float keyframes ───────────────────────────────────── */}
-      <style>{`
+      {/* <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(var(--tw-rotate, 0deg)); }
           50%       { transform: translateY(-10px) rotate(var(--tw-rotate, 0deg)); }
@@ -198,7 +198,7 @@ export default function HeroSection() {
         .animate-float {
           animation: float 5s ease-in-out infinite;
         }
-      `}</style>
+      `}</style> */}
     </section>
   );
 }

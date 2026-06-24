@@ -2,16 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
-// ── mock auth hook – replace with your real auth context ──────────────────────
-function useAuth() {
-  return {
-    user: null, // e.g. { name: "Rafi", role: "writer" }
-    logout: () => {},
-  };
-}
 // ─────────────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
@@ -20,8 +14,17 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
+   const router = useRouter();
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { data: session, error } = authClient.useSession();
+  console.log(session);
+  const user = session?.user;
+
+
+  const logout = async () => {
+    await authClient.signOut();
+    router.refresh();
+  };
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
@@ -42,8 +45,8 @@ export default function Navbar() {
     user?.role === "admin"
       ? "/dashboard/admin"
       : user?.role === "writer"
-      ? "/dashboard/writer"
-      : "/dashboard/user";
+        ? "/dashboard/writer"
+        : "/dashboard/user";
 
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -58,7 +61,6 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-
           {/* ── Logo ─────────────────────────────────────────── */}
           <Link href="/" className="select-none">
             <span className="text-xl font-bold tracking-tight">
@@ -126,7 +128,9 @@ export default function Navbar() {
                   <div className="absolute right-0 mt-2 w-48 rounded-xl border border-zinc-800 bg-[#141414] shadow-xl shadow-black/50 overflow-hidden">
                     <div className="px-4 py-3 border-b border-zinc-800">
                       <p className="text-xs text-zinc-500">Signed in as</p>
-                      <p className="text-sm text-white font-medium truncate">{user.name}</p>
+                      <p className="text-sm text-white font-medium truncate">
+                        {user.name}
+                      </p>
                       <span className="inline-block mt-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/20 text-purple-300 capitalize">
                         {user.role}
                       </span>
@@ -139,7 +143,10 @@ export default function Navbar() {
                       Dashboard
                     </Link>
                     <button
-                      onClick={() => { logout(); setDropOpen(false); }}
+                      onClick={() => {
+                        logout();
+                        setDropOpen(false);
+                      }}
                       className="w-full text-left px-4 py-3 text-sm text-red-400 hover:text-red-300 hover:bg-zinc-800/60 transition-colors border-t border-zinc-800"
                     >
                       Sign out
@@ -150,23 +157,18 @@ export default function Navbar() {
             ) : (
               <>
                 <Link
-                href="/login"
-                className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
-              >
-                Sign in
-              </Link>
+                  href="/login"
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
+                >
+                  Sign in
+                </Link>
                 <Link
-                href="/register"
-                className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
-              >
-                Register
-              </Link>
-
+                  href="/register"
+                  className="px-4 py-2 rounded-lg text-sm font-medium bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white shadow-md shadow-purple-500/25 hover:opacity-90 transition-opacity duration-200"
+                >
+                  Register
+                </Link>
               </>
-             
-              
-              
-
             )}
           </div>
 
@@ -230,7 +232,9 @@ export default function Navbar() {
                       {user.name?.[0]?.toUpperCase() ?? "U"}
                     </span>
                     <div>
-                      <p className="text-sm text-white font-medium">{user.name}</p>
+                      <p className="text-sm text-white font-medium">
+                        {user.name}
+                      </p>
                       <span className="inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold bg-purple-500/20 text-purple-300 capitalize">
                         {user.role}
                       </span>
