@@ -149,6 +149,8 @@ const navItems =
               {user.image ? (
                 <Image 
                   src={user.image} 
+                    width={36}
+    height={36}
                   alt={user.name || "User profile"} 
                   className="w-9 h-9 rounded-xl object-cover bg-zinc-800 border border-zinc-700/50"
                 />
