@@ -21,7 +21,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
 
           {/* ── Brand ─────────────────────────────────────── */}
-          <div className="lg:col-span-1 space-y-4">
+          <div className="lg:col-span-1 space-y-4 pt">
             <Link href="/" className="inline-block select-none">
               <span className="text-2xl font-bold tracking-tight">
                 <span className="text-white">fa</span>

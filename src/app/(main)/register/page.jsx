@@ -76,7 +76,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-[85vh] flex items-center justify-center bg-[#080808] px-4 py-12 relative overflow-hidden">
+    <div className="min-h-[85vh] flex items-center justify-center bg-[#080808] px-4 py-12 pt-28 relative overflow-hidden">
       {/* Background radial accent halos */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
         <div className="absolute -top-40 -right-40 w-[450px] h-[450px] rounded-full bg-purple-600/10 blur-[120px]" />

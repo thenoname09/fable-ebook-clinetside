@@ -10,7 +10,7 @@ const NumberCountUp = () => {
         <>
    {STATS.map(({ end, suffix, label }) => (
             <div key={label} className="flex flex-col items-center gap-0.5">
-              <span className="text-xl sm:text-2xl font-bold text-white">
+              <span className="text-xl sm:text-2xl font-bold text-white ">
                 <CountUp
                   end={end}
                   suffix={suffix}
