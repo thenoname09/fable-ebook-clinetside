@@ -14,6 +14,19 @@ export const serverMutation = async(path,method,data)=>{
 }
 
 export const serverFetch = async(path,)=>{
-    const res = await fetch(`${baseUrl}/${path}`)
+    const res = await fetch(`${baseUrl}${path}`)
+    return res.json()
+}
+
+export const DeleteMutation = async(path,method)=>{
+    const res = await fetch(`${baseUrl}${path}`,{
+        method:method,
+        headers:{
+            "Content-Type" : "application/json"
+
+        },
+        
+
+    })
     return res.json()
 }
