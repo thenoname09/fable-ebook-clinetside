@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button, Modal,  Spinner } from "@heroui/react";
 import { FiAlertTriangle, FiTrash2, FiX } from "react-icons/fi";
 import { EbookDelete } from "@/lib/writer/action";
+import toast from "react-hot-toast";
 
 export default function BookDeleteModal({ isOpen, onClose, book, onDeleted }) {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -16,10 +17,11 @@ export default function BookDeleteModal({ isOpen, onClose, book, onDeleted }) {
     const res = await EbookDelete(book._id);
 
     if (res?.deletedCount > 0 || res?.acknowledged) {
+          toast.success(" Successfully deleted!");
       onDeleted(book._id);
       onClose();
     } else {
-      alert("Failed to delete ebook. Please try again.");
+       toast.error("Failed to delete ebook. Please try again.");
     }
 
     setIsDeleting(false);
@@ -60,7 +62,7 @@ export default function BookDeleteModal({ isOpen, onClose, book, onDeleted }) {
                   <p className="text-sm text-zinc-500 leading-relaxed">
                     Are you sure you want to delete{" "}
                     <span className="text-zinc-300 font-medium">
-                      "{book?.title || "this ebook"}"
+                      `{book?.title || "this ebook"}`
                     </span>
                     ? This action cannot be undone.
                   </p>

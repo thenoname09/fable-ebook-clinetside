@@ -8,11 +8,16 @@ import {
   FiPlusCircle,
   FiBookOpen,
   FiSearch,
+  FiEyeOff,
+  FiEye,
 } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
 import EditModal from "@/components/Dashboard/EditModal";
 import BookDeleteModal from "../../../../../components/Dashboard/BookDeleteModal";
+import { EbookUpdate } from "@/lib/writer/action";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const STATUS_STYLES = {
   published: "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20",
@@ -38,7 +43,7 @@ export default function ManageEbookClient({ events: initialEvents = [] }) {
   const [deleting, setDeleting] = useState(null);
 
   // edit modal state
-
+  const router = useRouter();
   const [editState, setEditState] = useState({ open: false, book: null });
   const openEdit = (book) => {
     setEditState({ open: true, book });
@@ -52,13 +57,30 @@ export default function ManageEbookClient({ events: initialEvents = [] }) {
     setEbooks((prev) => prev.map((b) => (b._id === updated._id ? updated : b)));
   };
 
-   const [deleteState, setDeleteState] = useState({ open: false, book: null });
- 
-  const openDelete  = (book) => setDeleteState({ open: true, book });
-  const closeDelete = ()     => setDeleteState({ open: false, book: null });
- 
+  const [deleteState, setDeleteState] = useState({ open: false, book: null });
+
+  const openDelete = (book) => setDeleteState({ open: true, book });
+  const closeDelete = () => setDeleteState({ open: false, book: null });
+
   const handleDeleted = (id) => {
     setEbooks((prev) => prev.filter((b) => b._id !== id));
+  };
+
+  const handleToggleStatus = async (bookId, currentStatus) => {
+    const newStatus =
+      currentStatus === "published" ? "unpublished" : "published";
+
+    setEbooks((prev) =>
+      prev.map((b) => (b._id === bookId ? { ...b, status: newStatus } : b)),
+    );
+    const res = await EbookUpdate({ status: newStatus }, bookId);
+
+    if (res?.modifiedCount) {
+      toast.success(`Your Book ${newStatus} successfully!`);
+    } else {
+      toast.error();
+      (" Failed to update status");
+    }
   };
 
   const filtered = ebooks.filter((b) =>
@@ -215,7 +237,28 @@ export default function ManageEbookClient({ events: initialEvents = [] }) {
                         >
                           <FiEdit2 size={14} />
                         </button>
-                         <button
+                        <button
+                          title={
+                            book.status === "published"
+                              ? "Unpublish"
+                              : "Publish"
+                          }
+                          onClick={() =>
+                            handleToggleStatus(book._id, book.status)
+                          }
+                          className={`p-1.5 rounded-lg transition-colors ${
+                            book.status === "published"
+                              ? "text-zinc-500 hover:text-amber-400 hover:bg-amber-500/10"
+                              : "text-zinc-500 hover:text-emerald-400 hover:bg-emerald-500/10"
+                          }`}
+                        >
+                          {book.status === "published" ? (
+                            <FiEyeOff size={14} />
+                          ) : (
+                            <FiEye size={14} />
+                          )}
+                        </button>
+                        <button
                           title="Delete"
                           onClick={() => openDelete(book)}
                           className="hover:cursor-pointer p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-red-500/10 transition-colors"
@@ -240,12 +283,12 @@ export default function ManageEbookClient({ events: initialEvents = [] }) {
         book={editState.book}
         onSave={handleSave}
       />
-   <BookDeleteModal
-  isOpen={deleteState.open}
-  onClose={closeDelete}
-  book={deleteState.book}
-  onDeleted={handleDeleted}
-/>
+      <BookDeleteModal
+        isOpen={deleteState.open}
+        onClose={closeDelete}
+        book={deleteState.book}
+        onDeleted={handleDeleted}
+      />
     </div>
   );
 }

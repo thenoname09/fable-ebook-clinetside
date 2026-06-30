@@ -26,6 +26,7 @@ import {
 } from "react-icons/fi";
 import Image from "next/image";
 import { EbookUpdate } from "@/lib/writer/action";
+import toast from "react-hot-toast";
 
 // ── style constants ───────────────────────────────────────────────────────────
 const inputCls =
@@ -136,11 +137,11 @@ export default function EditModal({ isOpen, onClose, book, onSave }) {
     const res = await EbookUpdate(updated, book._id);
 
     if (res?.modifiedCount > 0 ) {
-      alert("Ebook updated successfully!");
+     toast.success("Ebook updated successfully!");
       onSave({ ...book, ...updated });
       onClose();
     } else {
-      alert("Failed to update ebook. Please try again.");
+      toast.error("Failed to update ebook. Please try again.");
     }
 
     setIsSaving(false);
