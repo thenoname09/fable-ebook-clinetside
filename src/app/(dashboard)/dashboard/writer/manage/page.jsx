@@ -11,7 +11,6 @@ const ManageEvent = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     })
-     console.log('Session email:', session?.user?.email);
     const events = await myMangeBook (session?.user?.email) 
     
     return (

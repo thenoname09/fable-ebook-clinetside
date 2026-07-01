@@ -79,7 +79,7 @@ export default function ManageEbookClient({ events: initialEvents = [] }) {
       toast.success(`Your Book ${newStatus} successfully!`);
     } else {
       toast.error();
-      (" Failed to update status");
+      ("Failed to update status");
     }
   };
 

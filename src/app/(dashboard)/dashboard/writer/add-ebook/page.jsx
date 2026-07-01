@@ -12,7 +12,7 @@ import {
   Select,
   ListBox,
   Button,
-  toast,
+
 } from "@heroui/react";
 import {
   FiChevronDown,
@@ -28,6 +28,7 @@ import {
 import Image from "next/image";
 import { addEbook } from "@/lib/writer/action";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 // ── Shared Tailwind Design Tokens ─────────────────────────────────────────────
 const inputCls =
@@ -147,18 +148,19 @@ const handleSubmit = async (e) => {
     const res = await addEbook(payload);
 
     if (res?.insertedId || res?.success) {
-      alert("Ebook saved as unpublished!");
+   
+      toast.success("Your Book successfully added!");
       // reset form
       setForm({ title: "", genre: "", price: "", description: "", fullDescription: "" });
       setCoverUrl("");
       setCoverPreview("");
       setErrors({});
     } else {
-      alert("Something went wrong. Please try again.");
+       toast.error("Something went wrong. Please try again.");
     }
   } catch (err) {
     console.error("addEbook error:", err);
-    alert("Failed to save ebook.");
+    
   }
 };
 
