@@ -9,3 +9,12 @@ export const GetAllEBooks = async () => {
 
   return result;
 };
+
+export const GetEBooksById = async (id) => {
+
+
+  const result = await serverFetch(   `/api/ebooks/${id}`);
+  //   console.log(result, 'my events');
+
+  return result;
+};

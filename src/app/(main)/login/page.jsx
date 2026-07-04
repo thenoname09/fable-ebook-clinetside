@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Button,
   Card,
@@ -23,6 +23,13 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+const searchParams = useSearchParams()
+ const redirectTo  = searchParams.get("redirect") || '/'
+  const search = searchParams.get('search')
+ 
+
+
+
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -40,9 +47,9 @@ export default function LoginPage() {
       });
 
       if (data) {
-        router.refresh();
+        
         // Redirects users back to core system tracking or landing page
-        router.push("/"); 
+        router.push(redirectTo); 
       }
 
       if (authError) {

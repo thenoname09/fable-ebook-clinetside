@@ -1,4 +1,3 @@
-"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -35,21 +34,23 @@ export default function BookCard({ book }) {
     status,
   } = book;
 
+  console.log(coverImage)
   const genreStyle  = GENRE_STYLES[genre]  ?? "bg-zinc-800 text-zinc-400 border-zinc-700";
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES.unpublished;
 
   return (
-    <div className="group flex flex-col bg-[#0f0f0f] border border-zinc-800/60 rounded-2xl overflow-hidden hover:border-zinc-700 transition-all duration-200 hover:shadow-lg hover:shadow-black/40">
+    <div className="group flex flex-col bg-[#0f0f0f] border border-zinc-800/60 rounded-xl overflow-hidden hover:border-zinc-700 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10">
 
-      {/* ── Cover image  */}
-      <div className="relative w-full aspect-[3/2]  overflow-hidden bg-zinc-900 shrink-0">
+      {/* ── Cover image (Larger & More Prominent) */}
+      <Link href={`/browse/${_id}`}>
+<div className="relative w-full aspect-[3/3.5]  overflow-hidden bg-zinc-900 shrink-0">
         {coverImage ? (
           <Image
             src={coverImage}
             alt={title}
           fill
        
-            className=" w-full object-contain   bg-zinc-900 group-hover:scale-105 transition-transform duration-500"
+            className=" w-full object-contain  bg-zinc-900 group-hover:scale-105 transition-transform duration-500"
             
           />
         ) : (
@@ -63,15 +64,17 @@ export default function BookCard({ book }) {
           {genre}
         </span> */}
       </div>
+</Link>
 
       {/* ── Content ──────────────────────────────────────────── */}
       <div className="flex flex-col flex-1 p-4 gap-3">
 
-        {/* Title */}
-        <h3 className="text-sm font-bold text-white leading-snug line-clamp-2 group-hover:text-purple-300 transition-colors">
-          {title}
-        </h3>
-
+        {/* Title - Clickable */}
+<Link href={`/browse/${_id}`}>
+  <h3 className="text-[15px] font-bold text-white leading-snug line-clamp-2 group-hover:text-purple-300 hover:underline transition-colors cursor-pointer">
+    {title}
+  </h3>
+</Link>
         {/* Writer */}
         <p className="flex items-center gap-1.5 text-xs text-zinc-500">
           <FiUser size={11} className="shrink-0" />
@@ -79,34 +82,36 @@ export default function BookCard({ book }) {
         </p>
 
         {/* Description */}
-        <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
+        {/* <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
           {description}
-        </p>
+        </p> */}
 
         {/* Genre + Price row */}
-        <div className="flex items-center justify-between mt-auto pt-2 border-t border-zinc-800/60">
-          <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border capitalize ${genreStyle}`}>
-            {genre}
-          </span>
-          <span className="text-base font-bold text-white">
-            ${Number(price).toFixed(2)}
-          </span>
-        </div>
+<div className="w-full">
+  <div className="flex items-center justify-between gap-2 py-3 border-t border-zinc-800/60">
+    <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border whitespace-nowrap ${genreStyle}`}>
+      {genre}
+    </span>
+    <span className="text-base font-bold text-white">
+      ${Number(price).toFixed(2)}
+    </span>
+  </div>
+</div>
 
         {/* Status + Sales */}
-        <div className="flex items-center justify-between">
+        {/* <div className="flex items-center justify-between">
           <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border capitalize ${statusStyle}`}>
             {status}
           </span>
-        </div>
+        </div> */}
 
         {/* View Details button */}
-        <Link
+        {/* <Link
           href={`/ebooks/${_id}`}
           className="w-full text-center py-2.5 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#c084fc] to-[#818cf8] hover:opacity-90 transition-opacity shadow-md shadow-purple-500/20 mt-1"
         >
           View Details
-        </Link>
+        </Link> */}
 
       </div>
     </div>
