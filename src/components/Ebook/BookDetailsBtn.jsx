@@ -6,7 +6,7 @@ import { useState } from "react";
 import { FiBookmark, FiShoppingBag } from "react-icons/fi";
 
 const BookDetailsBtn = ({ book }) => {
-  const {_id,writerId,price,title} = book
+  const {_id,writerId,price,title, } = book
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,7 +19,7 @@ const BookDetailsBtn = ({ book }) => {
        bookPrice: price.toFixed(2),
       bookId : _id,
      bookTitle : title,
-     
+      bookImage: book?.coverImage,
     }
 
     const res = await fetch("/api/checkout_sessions", {
