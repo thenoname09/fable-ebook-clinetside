@@ -27,24 +27,23 @@ export default async function PaymentSuccess({ searchParams }) {
     ebookId:         metadata?.bookId,
     ebookTitle:      metadata?.bookTitle,
     coverImage:      metadata?.bookImage,
-    buyerId:         metadata?.userId,
-    buyerName:       customer_details?.name,
-    buyerEmail:      customer_details?.email,
+    buyerUserId:         metadata?.userId,
+    buyerUserEmail:      customer_details?.email, 
     
-    amount:          amount_total / 100,       
+    amount:          metadata?.amount,       
     paymentIntentId: payment_intent?.id,
-    sessionId:       session_id,
+    
     status:          "completed",
-    purchasedAt:     new Date(),
+   
   };
+console.log(purchaseData)
+  const res = await fetch(`${baseUrl}/api/bookBuyCollection`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(purchaseData),
+  });
 
-//   const res = await fetch(`${baseUrl}/api/bookBuyCollections`, {
-//     method: "POST",
-//     headers: { "Content-Type": "application/json" },
-//     body: JSON.stringify(purchaseData),
-//   });
-
-//   const data = await res.json();
+  const data = await res.json();
 
   // ── UI ──────────────────────────────────────────────────────────────────────
   return (
