@@ -183,7 +183,7 @@ const searchParams = useSearchParams()
           </Button>
 
           <p className="text-center text-xs text-zinc-500">
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link
               href="/register"
               className="text-[#c084fc] hover:underline font-medium transition-all"

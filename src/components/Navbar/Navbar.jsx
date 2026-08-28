@@ -5,6 +5,17 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
+import {
+  FiGrid,
+  FiBookOpen,
+  FiPlusCircle,
+  FiTrendingUp,
+  FiBookmark,
+  FiUser,
+  FiShoppingBag,
+  FiUsers,
+  FiDollarSign,
+} from "react-icons/fi";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -13,13 +24,35 @@ const NAV_LINKS = [
   { label: "Browse Ebooks", href: "/browse" },
 ];
 
+const writerMenu = [
+  { name: "Overview", href: "/dashboard/writer", icon: FiGrid },
+  { name: "Add Ebook", href: "/dashboard/writer/add-ebook", icon: FiPlusCircle },
+  { name: "Manage Ebooks", href: "/dashboard/writer/manage", icon: FiBookOpen },
+  { name: "Sales History", href: "/dashboard/writer/sales", icon: FiTrendingUp },
+  { name: "Bookmarks", href: "/dashboard/writer/bookmarks", icon: FiBookmark },
+  { name: "Profile", href: "/dashboard/writer/profile", icon: FiUser },
+];
+
+const readerMenu = [
+  { name: "Overview", href: "/dashboard/user", icon: FiGrid },
+  { name: "Purchased Ebooks", href: "/dashboard/user/purchased-ebooks", icon: FiBookOpen },
+  { name: "Purchase History", href: "/dashboard/user/purchase-history", icon: FiShoppingBag },
+  { name: "Bookmarks", href: "/dashboard/user/bookmarks", icon: FiBookmark },
+  { name: "Profile", href: "/dashboard/user/profile", icon: FiUser },
+];
+
+const adminMenu = [
+  { name: "Overview", href: "/dashboard/admin", icon: FiGrid },
+  { name: "Manage Ebooks", href: "/dashboard/admin/manage-ebooks", icon: FiBookOpen },
+  { name: "Manage Users", href: "/dashboard/admin/manage-users", icon: FiUsers },
+  { name: "Transactions", href: "/dashboard/admin/transactions", icon: FiDollarSign },
+];
+
 export default function Navbar() {
-   const router = useRouter();
+  const router = useRouter();
   const pathname = usePathname();
   const { data: session, error } = authClient.useSession();
-  console.log(session);
   const user = session?.user;
-
 
   const logout = async () => {
     await authClient.signOut();
@@ -36,25 +69,40 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    setMenuOpen(false);
-    setDropOpen(false);
-  }, [pathname]);
+ const [prevPathname, setPrevPathname] = useState(pathname);
+
+if (pathname !== prevPathname) {
+  setPrevPathname(pathname);
+  setMenuOpen(false);
+  setDropOpen(false);
+}
 
   const dashboardHref =
     user?.role === "admin"
       ? "/dashboard/admin"
       : user?.role === "writer"
-        ? "/dashboard/writer"
-        : "/dashboard/user";
+      ? "/dashboard/writer"
+      : "/dashboard/user";
 
   const isActive = (href) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   const isHomePage = pathname === "/";
+  const isDashboardRoute = pathname.startsWith("/dashboard");
+
+  const dashboardNavItems =
+    user?.role === "writer"
+      ? writerMenu
+      : user?.role === "admin"
+      ? adminMenu
+      : readerMenu;
+
   const navbarBackground = isHomePage
-    ? (scrolled ? "bg-[#0f0f0f]/95 backdrop-blur-md shadow-lg shadow-black/30 py-3" : "bg-transparent py-5")
+    ? scrolled
+      ? "bg-[#0f0f0f]/95 backdrop-blur-md shadow-lg shadow-black/30 py-3"
+      : "bg-transparent py-5"
     : "bg-[#0f0f0f]/95 backdrop-blur-md border-b border-zinc-800/50 py-3";
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navbarBackground}`}
@@ -172,7 +220,7 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* ── Mobile Hamburger ──────────────────────────────── */}
+          {/* ── Mobile Hamburger (single one, site-wide) ──────── */}
           <button
             onClick={() => setMenuOpen((p) => !p)}
             className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg border border-zinc-700 bg-zinc-900/60 text-zinc-300 hover:text-white hover:border-zinc-500 transition-colors"
@@ -185,10 +233,10 @@ export default function Navbar() {
         {/* ── Mobile Menu ───────────────────────────────────────── */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-            menuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
+            menuOpen ? "max-h-[32rem] opacity-100 mt-4" : "max-h-0 opacity-0"
           }`}
         >
-          <div className="rounded-xl border border-zinc-800 bg-[#141414]/95 backdrop-blur-md shadow-xl shadow-black/50 overflow-hidden">
+          <div className="rounded-xl border border-zinc-800 bg-[#141414]/95 backdrop-blur-md shadow-xl shadow-black/50 overflow-hidden max-h-[70vh] overflow-y-auto">
             <ul className="px-2 py-2 space-y-0.5">
               {NAV_LINKS.map(({ label, href }) => (
                 <li key={href}>
@@ -223,6 +271,30 @@ export default function Navbar() {
                 </li>
               )}
             </ul>
+
+            {/* Dashboard nav items — only shown when on a dashboard route */}
+            {isDashboardRoute && user && (
+              <>
+                <div className="h-px bg-zinc-800 mx-2" />
+                <ul className="px-2 py-2 space-y-0.5">
+                  {dashboardNavItems.map(({ name, href, icon: Icon }) => (
+                    <li key={href}>
+                      <Link
+                        href={href}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                          pathname === href
+                            ? "text-[#c084fc] bg-purple-500/10"
+                            : "text-zinc-400 hover:text-white hover:bg-zinc-800/60"
+                        }`}
+                      >
+                        <Icon size={16} />
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
 
             <div className="px-4 py-3 border-t border-zinc-800">
               {user ? (

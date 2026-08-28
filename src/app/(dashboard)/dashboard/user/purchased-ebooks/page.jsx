@@ -10,7 +10,7 @@ const PurchasedEbooksPage = async() => {
 
    
     return (
-         <div className="min-h-screen bg-[#080808] px-4 py-10 pt-24">
+         <div className="min-h-screen bg-[#080808] px-4 py-10 pt-8">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-2xl font-bold text-white mb-6">
           My Purchased Ebooks
