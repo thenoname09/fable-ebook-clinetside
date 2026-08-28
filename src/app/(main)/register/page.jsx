@@ -27,7 +27,7 @@ import {
 } from "react-icons/fi";
 import { BsGoogle } from "react-icons/bs";
 import { authClient } from "@/lib/auth-client";
-// Import your configured Better-Auth client instance
+
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -56,7 +56,7 @@ export default function RegisterPage() {
       if (data) {
         router.refresh();
         // Smart routing branch configuration matching user intent
-        router.push(user.role === "writer" ? "/dashboard" : "/browse");
+        router.push(user.role === "writer" ? "/dashboard" : "/");
       }
 
       if (authError) {

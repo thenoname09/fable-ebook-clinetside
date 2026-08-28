@@ -2,16 +2,21 @@
 
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FiBookmark, FiShoppingBag } from "react-icons/fi";
 
-const BookDetailsBtn = ({ book }) => {
+const BookDetailsBtn = ({ book ,user}) => {
   const {_id,writerId,price,title, } = book
 
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
+  const router = useRouter();
   const handleBuyBook = async () => {
+if (!user) {
+      router.push(`/login?redirect=/browse/${_id}`);
+      return;
+    }
     setIsLoading(true);
 
   const paymentData = {

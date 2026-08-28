@@ -114,7 +114,7 @@ console.log(purchaseData)
             {/* Actions */}
             <div className="w-full flex flex-col gap-2.5">
               <Link
-                href={`/ebooks/${metadata?.ebookId}`}
+                href={`/ebooks/${metadata?.bookId}`}
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white bg-gradient-to-r from-[#c084fc] to-[#818cf8] hover:opacity-90 transition-opacity shadow-lg shadow-purple-500/20"
               >
                 <FiBookOpen size={15} />

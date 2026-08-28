@@ -12,6 +12,8 @@ import {
   FiShoppingBag,
 } from "react-icons/fi";
 import BookDetailsBtn from "./BookDetailsBtn";
+import { headers } from "next/headers";
+import { ServerSideGetUser } from "@/lib/session";
 
 const GENRE_STYLES = {
   "science-fiction": "bg-sky-500/15 text-sky-400 border border-sky-500/20",
@@ -25,9 +27,13 @@ const GENRE_STYLES = {
   technology: "bg-cyan-500/15 text-cyan-400 border border-cyan-500/20",
 };
 
-export default function BookDetailsPage({ book }) {
+export default async function BookDetailsPage({ book }) {
   const genreStyle =
     GENRE_STYLES[book.genre] ?? "bg-zinc-800 text-zinc-400 border-zinc-700";
+
+ const user = await ServerSideGetUser();
+  
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black">
@@ -152,7 +158,7 @@ export default function BookDetailsPage({ book }) {
             </div>
 
             {/* Action Buttons */}
-            <BookDetailsBtn book={book}></BookDetailsBtn>
+            <BookDetailsBtn book={book} user={user}></BookDetailsBtn>
 
             {/* Trust Badges */}
             <div className="flex items-center gap-4 pt-4 border-t border-zinc-800/50">

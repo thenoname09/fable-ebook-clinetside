@@ -38,13 +38,13 @@ const writerMenu = [
   { key: "bookmarks", name: "Bookmarks", href: "/dashboard/writer/bookmarks", icon: FiBookmark },
   { key: "profile", name: "Profile", href: "/dashboard/writer/profile", icon: FiUser },
 ];
-// const readerMenu = [
-//   { key: "overview",          name: "Overview",          href: "/dashboard/user",              icon: FiGrid        },
-//   { key: "purchase-history",  name: "Purchase History",  href: "/dashboard/purchase-history",  icon: FiShoppingBag },
-//   { key: "purchased-ebooks",  name: "Purchased Ebooks",  href: "/dashboard/purchased-ebooks",  icon: FiBookOpen    },
-//   { key: "bookmarks",         name: "Bookmarks",         href: "/dashboard/bookmarks",         icon: FiBookmark    },
-//   { key: "profile",           name: "Profile",           href: "/dashboard/profile",           icon: FiUser        },
-// ];
+const readerMenu = [
+  { key: "overview",          name: "Overview",          href: "/dashboard/user",              icon: FiGrid        },
+  { key: "purchase-history",  name: "Purchase History",  href: "/dashboard/user/purchase-history",  icon: FiShoppingBag },
+  { key: "purchased-ebooks",  name: "Purchased Ebooks",  href: "/dashboard/user/purchased-ebooks",  icon: FiBookOpen    },
+  { key: "bookmarks",         name: "Bookmarks",         href: "/dashboard/user/bookmarks",         icon: FiBookmark    },
+  { key: "profile",           name: "Profile",           href: "/dashboard/user/profile",           icon: FiUser        },
+];
 // const adminMenu = [
 //   { key: "overview",        name: "Overview",        href: "/dashboard/admin",         icon: FiGrid        },
 //   { key: "manage-users",    name: "Manage Users",    href: "/dashboard/manage-users",  icon: FiUsers       },

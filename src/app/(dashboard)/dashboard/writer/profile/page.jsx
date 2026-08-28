@@ -198,7 +198,7 @@ export default function WriterProfilePage() {
               >
                 <FiHeart size={13} /> Bookmarks
               </Button>
-              <Link href="/dashboard/writer/profile">
+              <Link href="/dashboard/writer/profile/edit">
                 <Button
                   size="sm"
                   className="bg-gradient-to-r from-[#c084fc] to-[#818cf8] text-white rounded-lg text-xs h-9 gap-1.5 border-0 hover:opacity-90"
