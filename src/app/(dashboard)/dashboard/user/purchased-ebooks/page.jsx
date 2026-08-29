@@ -28,8 +28,8 @@ const PurchasedEbooksPage = async() => {
               >
                 <div className="relative w-full aspect-[2/3] bg-zinc-900">
                   <Image
-                    src={book.coverImage || '/placeholder-cover.png'}
-                    alt={book.ebookTitle || 'Book cover'}
+                    src={book.coverImage }
+                    alt={book.ebookTitle }
                     fill
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-300"
                   />
@@ -37,7 +37,7 @@ const PurchasedEbooksPage = async() => {
 
                 <div className="p-4">
                   <h3 className="text-white font-semibold text-sm truncate">
-                    {book.ebookTitle || 'Untitled'}
+                    {book.ebookTitle }
                   </h3>
                   <p className="text-zinc-500 text-xs mt-1">
                     Purchased{' '}

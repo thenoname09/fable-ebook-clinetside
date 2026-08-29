@@ -8,3 +8,9 @@ export const MyPurchasedBooks = async (id) => {
 
   return result;
 };
+
+
+export const GetPurchasedBookByRead = async (userId, ebookId) => {
+  const result = await serverFetch(`/api/bookBuyCollection/${userId}/${ebookId}`);
+  return result;
+};

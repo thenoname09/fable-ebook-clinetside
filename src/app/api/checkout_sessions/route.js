@@ -3,17 +3,57 @@ import { headers } from "next/headers";
 
 import { stripe } from "../../../lib/stripe";
 import { ServerSideGetUser } from "@/lib/session";
+import { GetPurchasedBookByRead } from "@/lib/api/purchasedBooks/data";
+import { GetEBooksById } from "@/lib/api/book";
 
 export async function POST(req) {
   try {
     const headersList = await headers();
     const origin = headersList.get("origin");
     const user = await ServerSideGetUser();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
     const body = await req.json();
-    console.log(body);
-    const { type, bookPrice,bookId,  bookTitle ,bookImage} = body;
+    
+    const { type, bookId,  bookTitle ,bookImage} = body;
+
+    const book = await GetEBooksById(bookId);
+    if (!book || typeof book.price === "undefined") {
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
+    }
+
+
+if (user.role === "admin") {
+  return NextResponse.json(
+    { error: "Admins are not permitted to purchase books." },
+    { status: 403 }
+  );
+}
+
+
+if (user.role === "writer" ) {
+  return NextResponse.json(
+    { error: "You cannot purchase your own book." },
+    { status: 403 }
+  );
+}
+
+// Block duplicate purchase
+    const existing = await GetPurchasedBookByRead(user.id, bookId);
+    if (existing?._id) {
+      return NextResponse.json(
+        { error: "You already own this book." },
+        { status: 409 }
+      );
+    }
+
+ const priceAmount = Math.round(parseFloat(book.price) * 100);
+
+
     let lineObj;
-const priceAmount = Math.round(parseFloat(bookPrice) * 100);
+
+
     if (type === "buying") {
       lineObj = {
         price_data: {
@@ -34,7 +74,7 @@ const priceAmount = Math.round(parseFloat(bookPrice) * 100);
       bookId,
       bookTitle,
       bookImage,
-      amount:parseFloat(bookPrice).toFixed(2),
+      amount:Number(book.price).toFixed(2),
     };
 
     // Create Checkout Sessions from body params.

@@ -51,7 +51,7 @@ const adminMenu = [
 export default function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
-  const { data: session, error } = authClient.useSession();
+  const { data: session } = authClient.useSession();
   const user = session?.user;
 
   const logout = async () => {
