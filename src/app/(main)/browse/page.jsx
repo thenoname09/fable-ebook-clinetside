@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import BookCard from '@/components/Ebook/BookCard';
 import { GetAllEBooks } from '@/lib/api/book';
 import React from 'react';
