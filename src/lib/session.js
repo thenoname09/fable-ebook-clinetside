@@ -12,9 +12,11 @@ export const ServerSideGetUser = async () => {
 
 export const requireRole  = async (role) => {
   const user = await ServerSideGetUser()
+
   if(!user){ redirect('/login')}
-if(user.role !== role){
-   redirect('/unauthorize')
+  
+if(user?.role !== role){
+   redirect('/unauthorized')
 }
 return user
 };
