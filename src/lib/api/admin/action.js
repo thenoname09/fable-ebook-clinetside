@@ -11,7 +11,18 @@ export const adminEbookUpdate = async (data, id) => {
 
 export const adminDeleteMutation = async (id) => {
     const res = await DeleteMutation(`/api/ebooks/${id}`, "DELETE")
-    // revalidatePath('/dashboard/admin/manage-ebooks')
+    revalidatePath('/dashboard/admin/manage-ebooks')
 
+    return res
+}
+
+
+export const adminUserRoleUpdate = async (data, id) => {
+    const res = await serverMutation(`/api/users/${id}`, "PATCH", data)
+    return res
+}
+
+export const adminUserDelete = async (id) => {
+    const res = await DeleteMutation(`/api/users/${id}`, "DELETE")
     return res
 }
