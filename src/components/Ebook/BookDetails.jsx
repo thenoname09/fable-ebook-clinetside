@@ -1,4 +1,3 @@
-
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -14,7 +13,7 @@ import {
 import BookDetailsBtn from "./BookDetailsBtn";
 
 import { ServerSideGetUser } from "@/lib/session";
-import { GetPurchasedBookByRead } from '@/lib/api/purchasedBooks/data';
+import { GetPurchasedBookByRead } from "@/lib/api/purchasedBooks/data";
 const GENRE_STYLES = {
   "science-fiction": "bg-sky-500/15 text-sky-400 border border-sky-500/20",
   fantasy: "bg-purple-500/15 text-purple-400 border border-purple-500/20",
@@ -31,14 +30,13 @@ export default async function BookDetailsPage({ book }) {
   const genreStyle =
     GENRE_STYLES[book.genre] ?? "bg-zinc-800 text-zinc-400 border-zinc-700";
 
- const user = await ServerSideGetUser();
+  const user = await ServerSideGetUser();
 
   let hasPurchased = false;
-if (user) {
-  const purchaseCheckRes = await GetPurchasedBookByRead(user.id, book._id);
-  hasPurchased = !!purchaseCheckRes?._id;
-}
-
+  if (user) {
+    const purchaseCheckRes = await GetPurchasedBookByRead(user.id, book._id);
+    hasPurchased = !!purchaseCheckRes?._id;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-zinc-950 via-zinc-900 to-black">
@@ -102,9 +100,12 @@ if (user) {
               {/* Author */}
               <div className="flex items-center gap-2 text-zinc-400">
                 <span className="text-base">by</span>
-                <span className="text-lg font-semibold text-purple-400 hover:text-purple-300 cursor-pointer">
-                  {book.writerName}
-                </span>
+               <Link
+    href={`/writer/${book.writerId}`}
+    className="text-lg font-semibold text-purple-400 hover:text-purple-300 transition-colors"
+  >
+    {book.writerName}
+  </Link>
                 <FiCheckCircle size={16} className="text-purple-400" />
               </div>
             </div>
@@ -163,7 +164,11 @@ if (user) {
             </div>
 
             {/* Action Buttons */}
-            <BookDetailsBtn book={book} user={user} hasPurchased={hasPurchased}></BookDetailsBtn>
+            <BookDetailsBtn
+              book={book}
+              user={user}
+              hasPurchased={hasPurchased}
+            ></BookDetailsBtn>
 
             {/* Trust Badges */}
             <div className="flex items-center gap-4 pt-4 border-t border-zinc-800/50">
@@ -231,10 +236,13 @@ if (user) {
                     {book.writerName} is a passionate writer who loves crafting
                     engaging stories that inspire and entertain readers.
                   </p>
-                  <button className="mt-3 flex items-center gap-2 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors border border-purple-500/30 rounded-lg px-3 py-1.5 hover:bg-purple-500/10">
+                  <Link
+                    href={`/writer/${book.writerId}`}
+                    className="mt-3 flex items-center gap-2 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors border border-purple-500/30 rounded-lg px-3 py-1.5 hover:bg-purple-500/10 w-fit"
+                  >
                     <span>View Profile</span>
                     <span>›</span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

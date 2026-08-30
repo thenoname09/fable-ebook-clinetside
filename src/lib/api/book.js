@@ -17,3 +17,8 @@ export const GetEBooksById = async (id) => {
 
   return result;
 };
+
+export const GetEBooksByWriterId = async (writerId) => {
+  const result = await serverFetch(`/api/ebooks?writerId=${writerId}`);
+  return result;
+};
