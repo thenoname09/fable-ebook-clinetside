@@ -5,8 +5,7 @@ import { GetFeaturedEBooks } from "@/lib/api/book";
 
 const FeaturedEbooksSection = async () => {
   const rawResult = await GetFeaturedEBooks();
-  const books = Array.isArray(rawResult) ? rawResult : []; // defensive guard, same pattern as elsewhere
-
+  const books = Array.isArray(rawResult) ? rawResult : []; 
   if (books.length === 0) return null; // don't render an empty section at all
 
   return (
