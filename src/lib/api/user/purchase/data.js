@@ -1,4 +1,4 @@
-import { serverFetch } from "@/lib/server";
+import { protectedFetch, serverFetch } from "@/lib/server";
 
 
 
@@ -6,6 +6,6 @@ import { serverFetch } from "@/lib/server";
 export const getUserPayments = async (userId) => {
   
 
-  const result = await serverFetch(`/api/paymentCollection/${userId}`);
+  const result = await protectedFetch(`/api/paymentCollection/${userId}`);
   return result ;
 };

@@ -1,14 +1,17 @@
 
-import { serverFetch } from "../server";
+import { serverFetch,protectedFetch } from "../server";
 
 export const GetAllEBooks = async () => {
 
 
-  const result = await serverFetch(   `/api/ebooks`);
+  const result = await protectedFetch(   `/api/ebooks/manage`);
 
   return result;
 };
-
+export const GetPublishedEBooks = async () => {
+  const result = await serverFetch(`/api/ebooks?status=published`);
+  return result;
+};
 export const GetEBooksById = async (id) => {
 
 

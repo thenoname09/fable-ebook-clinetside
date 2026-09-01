@@ -3,7 +3,10 @@ import ManageEbooksTable from "./ManageEbooksTable";
 
 
 const AdminManageAllBooksPage = async () => {
-  const ebooks = (await GetAllEBooks()) || [];
+    const rawResult = await GetAllEBooks();
+      console.log("GetAllEBooks raw result:", rawResult); // ADD THIS LINE
+
+ const ebooks = Array.isArray(rawResult) ? rawResult : [];
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-8">

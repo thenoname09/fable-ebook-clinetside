@@ -1,4 +1,4 @@
-import { serverFetch } from "../server";
+import { protectedFetch } from "../server";
 
 
 // export const myMangeBook = async (email) => {
@@ -12,7 +12,7 @@ import { serverFetch } from "../server";
 export const myMangeBook = async (email) => {
 
 
-  const result = await serverFetch(   `/api/ebooks?writerEmail=${(email)}`);
+  const result = await protectedFetch(   `/api/ebooks/manage?writerEmail=${(email)}`);
  
   return result;
 };

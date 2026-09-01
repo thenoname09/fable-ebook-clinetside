@@ -1,9 +1,9 @@
-import { serverFetch } from "@/lib/server";
+import { serverFetch,protectedFetch } from "@/lib/server";
 
 export const MyPurchasedBooks = async (id) => {
 
 
-  const result = await serverFetch(   `/api/bookBuyCollection/${id}`);
+  const result = await protectedFetch(   `/api/bookBuyCollection/${id}`);
 
 
   return result;
@@ -11,6 +11,6 @@ export const MyPurchasedBooks = async (id) => {
 
 
 export const GetPurchasedBookByRead = async (userId, ebookId) => {
-  const result = await serverFetch(`/api/bookBuyCollection/${userId}/${ebookId}`);
+  const result = await protectedFetch(`/api/bookBuyCollection/${userId}/${ebookId}`);
   return result;
 };

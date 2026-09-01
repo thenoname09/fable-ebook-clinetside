@@ -7,7 +7,7 @@ import { Spinner } from '@heroui/react';
 import { myMangeBook } from '@/lib/writer/data';
 
 
-const ManageEvent = async () => {
+const ManageBooksPage = async () => {
     const session = await auth.api.getSession({
         headers: await headers()
     })
@@ -20,4 +20,4 @@ const ManageEvent = async () => {
     );
 };
 
-export default ManageEvent;
+export default ManageBooksPage;

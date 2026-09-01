@@ -155,11 +155,10 @@ const handleSubmit = async (e) => {
       setCoverUrl("");
       setCoverPreview("");
       setErrors({});
-    } else {
-       toast.error("Something went wrong. Please try again.");
-    }
+    } 
   } catch (err) {
-    console.error("addEbook error:", err);
+     console.error("addEbook error:", err);
+  toast.error("Something went wrong. Please try again.")
     
   }
 };

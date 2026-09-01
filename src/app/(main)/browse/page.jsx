@@ -1,12 +1,13 @@
 export const dynamic = "force-dynamic"
 
 import BookCard from '@/components/Ebook/BookCard';
-import { GetAllEBooks } from '@/lib/api/book';
+
 import React from 'react';
+import { GetPublishedEBooks } from '../../../lib/api/book';
 
 const BrowseEbookPage = async() => {
 
-    const books = await GetAllEBooks()
+    const books = await GetPublishedEBooks()
     
     return (
      <div className="pt-28 px-4 md:px-8 max-w-7xl mx-auto">

@@ -1,4 +1,5 @@
 import { baseUrl } from '@/lib/baseUrl';
+import { serverMutation } from '@/lib/server';
 import { stripe } from '@/lib/stripe';
 import Link from 'next/link';
 import { FiCheckCircle, FiBookOpen, FiArrowRight } from 'react-icons/fi';
@@ -43,14 +44,10 @@ export default async function PaymentSuccess({ searchParams }) {
   };
 
   // (Express route already guards against duplicate inserts via isPurchaseBookExist)
-  try {
-    await fetch(`${baseUrl}/api/bookBuyCollection`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(purchaseData),
-    });
+   try {
+    await serverMutation('/api/bookBuyCollection', 'POST', purchaseData);
   } catch (err) {
-    console.error('Failed to record purchase:', err); 
+    console.error('Failed to record purchase:', err);
   }
 
   return (
