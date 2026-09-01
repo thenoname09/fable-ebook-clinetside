@@ -101,9 +101,7 @@ export default function Footer() {
           <p className="text-xs text-zinc-600">
             © {new Date().getFullYear()} Fable. All rights reserved.
           </p>
-          <p className="text-xs text-zinc-700">
-            Built with ❤️ for readers &amp; writers everywhere.
-          </p>
+       
         </div>
       </div>
     </footer>

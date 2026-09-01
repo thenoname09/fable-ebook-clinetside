@@ -12,6 +12,19 @@ export const GetPublishedEBooks = async () => {
   const result = await serverFetch(`/api/ebooks?status=published`);
   return result;
 };
+
+
+export const GetFeaturedEBooks = async () => {
+  const result = await serverFetch(`/api/ebooks?status=published&limit=6`);
+  return result;
+};
+
+
+
+
+
+
+
 export const GetEBooksById = async (id) => {
 
 
