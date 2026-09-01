@@ -9,32 +9,39 @@ export default function GlobalSpinner({
 }) {
   return (
     <div
+      role="status"
+      aria-live="polite"
       className={`flex flex-col items-center justify-center p-6 ${
         fullScreen
-          ? "fixed inset-0 z-50 min-h-screen w-screen bg-black/80 backdrop-blur-md"
+          ? "fixed inset-0 z-[999] min-h-screen w-screen bg-black/60 backdrop-blur-sm"
           : "min-h-[400px] w-full"
       }`}
     >
       <div className="relative flex flex-col items-center justify-center">
-        {/* Subtle Brand Glow Effect */}
-        <div className="absolute -inset-4 rounded-full bg-emerald-500/20 blur-xl filter animate-pulse" />
+        {/* Centered Brand Glow Effect */}
+        <div className="absolute top-1/2 left-1/2 h-20 w-20 -translate-x-1/2 -translate-y-full rounded-full bg-purple-500/20 blur-xl filter animate-pulse" />
 
         {/* HeroUI Custom Spinner */}
         <Spinner
           size="lg"
           classNames={{
-            circle1: "border-b-emerald-500",
-            circle2: "border-b-emerald-400",
-            wrapper: "w-14 h-14",
+            circle1: "border-b-purple-500",
+            circle2: "border-b-purple-400",
+            wrapper: "w-14 h-14 relative z-10",
           }}
         />
 
-        {/* Animated Loading Text */}
+        {/* Smoother Animated Loading Text */}
         <motion.p
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, repeat: Infinity, repeatType: "reverse" }}
-          className="mt-4 text-sm font-medium tracking-wide text-zinc-300"
+          initial={{ opacity: 0.4 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 0.8,
+            repeat: Infinity,
+            repeatType: "reverse",
+            ease: "easeInOut",
+          }}
+          className="mt-5 text-sm font-medium tracking-wide text-zinc-300 relative z-10"
         >
           {message}
         </motion.p>
