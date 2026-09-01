@@ -38,7 +38,7 @@ const UserOverviewPage = async () => {
           Welcome back, {user?.name?.split(" ")[0] || "Reader"} 
         </h1>
         <p className="text-sm text-zinc-500 mt-1">
-          Here's what's happening with your library.
+         Track your reading journey and explore your personal collection.
         </p>
       </div>
 
