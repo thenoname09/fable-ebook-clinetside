@@ -38,3 +38,8 @@ export const GetEBooksByWriterId = async (writerId) => {
   const result = await serverFetch(`/api/ebooks?writerId=${writerId}`);
   return result;
 };
+
+export const GetTopWriters = async () => {
+  const result = await serverFetch(`/api/public/top-writers`);
+  return result;
+};
