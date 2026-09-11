@@ -21,14 +21,11 @@ export default function GlobalSpinner({
         {/* Centered Brand Glow Effect */}
         <div className="absolute top-1/2 left-1/2 h-20 w-20 -translate-x-1/2 -translate-y-full rounded-full bg-purple-500/20 blur-xl filter animate-pulse" />
 
-        {/* HeroUI Custom Spinner */}
+        {/* HeroUI Custom Spinner - Fixed for v3 */}
         <Spinner
           size="lg"
-          classNames={{
-            circle1: "border-b-purple-500",
-            circle2: "border-b-purple-400",
-            wrapper: "w-14 h-14 relative z-10",
-          }}
+          color="current"
+          className="w-14 h-14 relative z-10 text-purple-500"
         />
 
         {/* Smoother Animated Loading Text */}
