@@ -164,12 +164,12 @@ export default function LoginForm() { // CHANGED: was LoginPage
             <Separator className="flex-1 bg-zinc-800/60" />
           </div>
 
-          <Button
+          {/* <Button
             onClick={handleGoogleLogIn}
             className="w-full bg-zinc-900 border border-zinc-800 hover:bg-zinc-800/60 text-zinc-300 text-sm font-medium transition-all"
           >
             <BsGoogle className="mr-1 text-sm text-zinc-400" /> Sign in with Google
-          </Button>
+          </Button> */}
 
           <p className="text-center text-xs text-zinc-500">
             Don&apos;t have an account?{" "}
