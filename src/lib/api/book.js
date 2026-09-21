@@ -8,8 +8,13 @@ export const GetAllEBooks = async () => {
 
   return result;
 };
-export const GetPublishedEBooks = async () => {
-  const result = await serverFetch(`/api/ebooks?status=published`);
+export const GetPublishedEBooks = async ({ search, genre, sort } = {}) => {
+  const params = new URLSearchParams({ status: "published" });
+  if (search) params.set("search", search);
+  if (genre && genre !== "all") params.set("genre", genre);
+  if (sort) params.set("sort", sort);
+
+  const result = await serverFetch(`/api/ebooks?${params.toString()}`);
   return result;
 };
 

@@ -1,11 +1,15 @@
-
-
 import React from 'react';
 import { GetPublishedEBooks } from '../../../lib/api/book';
 import BrowseEbookContainer from '@/components/Ebook/BrowseEbookContainer';
 
-const BrowseEbookPage = async () => {
-  const rawResult = await GetPublishedEBooks();
+const BrowseEbookPage = async ({ searchParams }) => {
+  const params = await searchParams;
+
+  const rawResult = await GetPublishedEBooks({
+    search: params?.search,
+    genre: params?.genre,
+    sort: params?.sort,
+  });
   const books = Array.isArray(rawResult) ? rawResult : [];
 
   return (
@@ -17,7 +21,7 @@ const BrowseEbookPage = async () => {
         </p>
       </div>
 
-      <BrowseEbookContainer initialBooks={books} /> {/* CHANGED */}
+      <BrowseEbookContainer books={books} />
     </div>
   );
 };

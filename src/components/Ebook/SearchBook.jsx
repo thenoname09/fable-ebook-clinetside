@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { InputGroup, TextField, Label, Select, ListBox } from "@heroui/react";
 import { FiSearch, FiChevronDown, FiX } from "react-icons/fi";
 
@@ -12,8 +13,6 @@ const GENRES = [
   { id: "romance", label: "Romance" },
   { id: "thriller", label: "Thriller" },
   { id: "horror", label: "Horror" },
-  { id: "biography", label: "Biography" },
-  { id: "self-help", label: "Self Help" },
   { id: "technology", label: "Technology" },
 ];
 
@@ -23,60 +22,52 @@ const SORT_OPTIONS = [
   { id: "price-high", label: "Price: High to Low" },
 ];
 
-export default function SearchBook({ books = [], onFilteredChange }) {
-  const [search, setSearch] = useState("");
-  const [genre, setGenre] = useState("all");
-  const [sort, setSort] = useState("newest");
+export default function SearchBook() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [search, setSearch] = useState(searchParams.get("search") || "");
+  const [genre, setGenre] = useState(searchParams.get("genre") || "all");
+  const [sort, setSort] = useState(searchParams.get("sort") || "newest");
+
+  const debounceRef = useRef(null);
 
   useEffect(() => {
-    let result = books.filter((book) => {
-      const matchesSearch =
-        !search ||
-        book.title?.toLowerCase().includes(search.toLowerCase()) ||
-        book.writerName?.toLowerCase().includes(search.toLowerCase());
-      const matchesGenre = genre === "all" || book.genre === genre;
-      return matchesSearch && matchesGenre;
-    });
+    if (debounceRef.current) clearTimeout(debounceRef.current);
 
-    if (sort === "price-low") {
-      result = [...result].sort((a, b) => Number(a.price) - Number(b.price));
-    } else if (sort === "price-high") {
-      result = [...result].sort((a, b) => Number(b.price) - Number(a.price));
-    } else {
-      result = [...result].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      );
-    }
+    debounceRef.current = setTimeout(() => {
+      const sp = new URLSearchParams();
+      if (search) sp.set("search", search);
+      if (genre !== "all") sp.set("genre", genre);
+      if (sort !== "newest") sp.set("sort", sort);
 
-    onFilteredChange?.(result);
-  }, [books, search, genre, sort, onFilteredChange]);
+      // This navigation re-runs BrowseEbookPage server-side with the new searchParams
+      router.push(sp.toString() ? `?${sp.toString()}` : "?", { scroll: false });
+    }, 400);
+
+    return () => clearTimeout(debounceRef.current);
+  }, [search, genre, sort, router]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-3 w-full">
-      {/* Search Input */}
-      <TextField
-        className="flex-1 flex flex-col gap-1.5 focus:outline-none focus:ring-0"
-        aria-label="Search books"
-      >
+      <TextField className="flex-1 flex flex-col gap-1.5" aria-label="Search books">
         <Label className="sr-only">Search</Label>
-        <InputGroup className="bg-zinc-900/50 border border-zinc-800/80 hover:border-zinc-700 focus-within:border-[#c084fc]/50 focus:outline-none focus:ring-0 focus-within:ring-0 focus-visible:outline-none rounded-xl transition-colors">
+        <InputGroup className="bg-zinc-900/50 border border-zinc-800/80 hover:border-zinc-700 focus-within:border-[#c084fc]/50 rounded-xl transition-colors">
           <InputGroup.Prefix>
             <FiSearch className="text-zinc-500" size={16} />
           </InputGroup.Prefix>
-
           <InputGroup.Input
             placeholder="Search by title or author..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className=" placeholder:text-zinc-500 bg-transparent outline-none focus:outline-none focus:ring-0 focus-visible:outline-none caret-white w-full text-sm border-none shadow-none"
+            className="placeholder:text-zinc-500 bg-transparent outline-none focus:outline-none focus:ring-0 focus-visible:outline-none caret-white w-full text-sm border-none shadow-none"
           />
-
           {search && (
             <InputGroup.Suffix>
               <button
                 type="button"
                 onClick={() => setSearch("")}
-                className="text-zinc-500 hover:text-white transition-colors p-1 hover:cursor-pointer  "
+                className="text-zinc-500 hover:text-white transition-colors p-1 hover:cursor-pointer"
               >
                 <FiX size={14} />
               </button>
@@ -85,7 +76,6 @@ export default function SearchBook({ books = [], onFilteredChange }) {
         </InputGroup>
       </TextField>
 
-      {/* Genre Filter */}
       <Select
         aria-label="Filter by genre"
         value={genre}
@@ -122,7 +112,6 @@ export default function SearchBook({ books = [], onFilteredChange }) {
         </Select.Popover>
       </Select>
 
-      {/* Sort Select */}
       <Select
         aria-label="Sort books"
         value={sort}
