@@ -1,8 +1,9 @@
 import { Suspense } from "react";
 import BookCard from "./BookCard";
 import SearchBook from "./SearchBook";
+import BookPagination from "./BookPagination";
 
-const BrowseEbookContainer = ({ books }) => {
+const BrowseEbookContainer = ({ books, total, currentPage, itemsPerPage }) => {
   return (
     <>
       <div className="mb-8">
@@ -21,6 +22,18 @@ const BrowseEbookContainer = ({ books }) => {
         <p className="text-center text-zinc-500 py-20">
           No ebooks match your search.
         </p>
+      )}
+
+      {total > 0 && (
+        <div className="mt-10 flex justify-center">
+          <Suspense fallback={null}>
+            <BookPagination
+              currentPage={currentPage}
+              totalItems={total}
+              itemsPerPage={itemsPerPage}
+            />
+          </Suspense>
+        </div>
       )}
     </>
   );
