@@ -7,7 +7,7 @@ import { FiSearch, FiChevronDown, FiX } from "react-icons/fi";
 
 const GENRES = [
   { id: "all", label: "All Genres" },
-  { id: "fantasy", label: "Fantasy" },
+  { id: "fantasy", label: "Fantasy" }, 
   { id: "science-fiction", label: "Science Fiction" },
   { id: "mystery", label: "Mystery" },
   { id: "romance", label: "Romance" },
