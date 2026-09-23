@@ -27,14 +27,14 @@ export default function BookCard({ book }) {
     _id,
     title,
     writerName,
-    description,
+    
     genre,
     price,
     coverImage,
     status,
   } = book;
 
-  console.log(coverImage)
+
   const genreStyle  = GENRE_STYLES[genre]  ?? "bg-zinc-800 text-zinc-400 border-zinc-700";
   const statusStyle = STATUS_STYLES[status] ?? STATUS_STYLES.unpublished;
 
@@ -81,10 +81,7 @@ export default function BookCard({ book }) {
           <span className="truncate">by {writerName}</span>
         </p>
 
-        {/* Description */}
-        {/* <p className="text-xs text-zinc-500 leading-relaxed line-clamp-3">
-          {description}
-        </p> */}
+        
 
         {/* Genre + Price row */}
 <div className="w-full">
@@ -93,7 +90,7 @@ export default function BookCard({ book }) {
       {genre}
     </span>
     <span className="text-base font-bold text-white">
-      ${Number(price).toFixed(2)}
+      ${Number(price)}
     </span>
   </div>
 </div>
