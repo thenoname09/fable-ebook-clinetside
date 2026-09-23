@@ -1,7 +1,10 @@
 import React from 'react';
 import { GetPublishedEBooks } from '../../../lib/api/book';
 import BrowseEbookContainer from '@/components/Ebook/BrowseEbookContainer';
-
+export const metadata = {
+  title: "Browse Ebooks - Fable",
+  description: "Discover, search, and filter through our digital ebook collection.",
+};
 const BrowseEbookPage = async ({ searchParams }) => {
   const params = await searchParams;
 
@@ -11,6 +14,8 @@ const BrowseEbookPage = async ({ searchParams }) => {
     sort: params?.sort,
     page: params?.page, 
   });
+
+  
 
   // ADDED — since GetPublishedEBooks now always sends `page` (defaults to 1),
   // result is always the paginated shape: { total, books, page, limit }

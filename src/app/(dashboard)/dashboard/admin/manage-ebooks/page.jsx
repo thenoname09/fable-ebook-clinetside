@@ -1,7 +1,10 @@
 import { GetAllEBooks } from "@/lib/api/book";
 import ManageEbooksTable from "./ManageEbooksTable";
 
-
+export const metadata = {
+  title: "Manage Ebooks",
+  description: "Manage, view, and modify all user-submitted ebooks.",
+};
 const AdminManageAllBooksPage = async () => {
     const rawResult = await GetAllEBooks();
       console.log("GetAllEBooks raw result:", rawResult); // ADD THIS LINE

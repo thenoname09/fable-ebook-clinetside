@@ -4,6 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+
+export const metadata = {
+  title: "Purchased Ebooks",
+  description: "View and access your purchased ebook library.",
+
+};
+
+
 const PurchasedEbooksPage = async() => {
      const user = await ServerSideGetUser();
     const MyPurchasedBookLists = await MyPurchasedBooks(user.id)

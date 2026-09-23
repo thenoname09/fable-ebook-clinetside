@@ -3,6 +3,13 @@ import { ServerSideGetUser } from "@/lib/session";
 import React from "react";
 import PurchaseList from "./PurchaseList";
 
+export const metadata = {
+  title: "Purchase History",
+  description: "View your past orders, invoices, and payment receipts.",
+};
+
+
+
 const PurchaseHistoryPage = async () => {
   const user = await ServerSideGetUser();
   const payments = await getUserPayments(user.id);

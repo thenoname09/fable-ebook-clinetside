@@ -28,6 +28,14 @@ import {
 import { BsGoogle } from "react-icons/bs";
 import { authClient } from "@/lib/auth-client";
 
+export const metadata = {
+  title: "Sign Up — Fable",
+  description: "Create a Fable account to start discovering, buying, and building your digital ebook collection.",
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default function RegisterPage() {
   const router = useRouter();

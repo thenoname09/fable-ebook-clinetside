@@ -3,7 +3,7 @@ import React from 'react';
 const page = () => {
   return (
     <div className=''>
-      ds
+      coming soon...
     </div>
   );
 };

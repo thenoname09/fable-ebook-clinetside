@@ -4,6 +4,15 @@ import { FiMail, FiCalendar, FiEdit2, FiUser, FiCheckCircle } from "react-icons/
 import { ServerSideGetUser } from "@/lib/session";
 import { redirect } from "next/navigation";
 
+
+export const metadata = {
+  title: "Profile Settings",
+  description: "Manage your account details and password.",
+};
+
+
+
+
 const UserProfilePage = async () => {
   const user = await ServerSideGetUser();
 

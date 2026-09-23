@@ -6,6 +6,10 @@ import { auth } from '@/lib/auth';
 import { Spinner } from '@heroui/react';
 import { myMangeBook } from '@/lib/writer/data';
 
+export const metadata = {
+  title: "Manage Ebooks",
+  description: "Manage, edit, and update your published ebooks.",
+};
 
 const ManageBooksPage = async () => {
     const session = await auth.api.getSession({
